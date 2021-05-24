@@ -1,0 +1,25 @@
+#   ---Plugin by niklas1623---
+#
+#   Copyright 2021 niklas1623. Alle Rechte vorbehalten.
+#
+#
+
+Prefix: "&2&lNick&a&lConomy &8»&r"
+
+
+#Um dieses Plugin verwenden zu können brauchst du eine MySQL Datenbank!
+
+Database:
+    username: servershop
+    password: HXQY8TCYCzETXajl
+    database: servershop
+    host: localhost
+    port: '3306'
+    options: "?autoReconnect=true&useSSL=false&AllowPublicKeyRetrieval=true&verifyServerCertificate=true"
+
+
+Settings:
+  Tax-Account:
+      AccountName: tax-holder
+      AccountUUID: ef0a45ad-4d2a-4ba9-aaf6-c2a94bb6bd8b
+      Tax-Amount: 5.0

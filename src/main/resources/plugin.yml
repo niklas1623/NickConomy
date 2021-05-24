@@ -1,0 +1,7 @@
+name: NickConomy
+version: ${project.version}
+main: de.niklas1623.nickconomy.NickConomy
+api-version: 1.16
+authors: [ niklas1623 ]
+description: New iConomy-System
+website: https://cultcraft.de/
