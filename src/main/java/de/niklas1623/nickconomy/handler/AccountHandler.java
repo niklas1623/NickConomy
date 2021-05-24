@@ -8,34 +8,50 @@ import java.sql.SQLException;
 
 public class AccountHandler {
 
-    public static void createAccount(int AtID, double Balance) {
+    public static int createAccount(int AtID, double Balance) {
         String createAccount = "INSERT INTO account (AtID, Balance) VALUES (?,?)";
         try {
             PreparedStatement ps = MySQL.con.prepareStatement(createAccount);
             ps.setInt(1, AtID);
             ps.setDouble(2, Balance);
-            ps.executeUpdate();
+            ResultSet key = executeStmtWithGeneratedKeys(ps);
+            if (key.next()) {
+                System.out.println("created account with aid = " + key.getInt(1));
+                return key.getInt(1);
+            }
             ps.close();
         } catch (SQLException exception) {
             exception.printStackTrace();
+        }
+        return 0;
+    }
+
+    public static ResultSet executeStmtWithGeneratedKeys(PreparedStatement query) {
+        try {
+            query.executeUpdate();
+            return query.getGeneratedKeys();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return null;
         }
     }
 
     public static double getBalance(int AID) {
         String getBalance = "SELECT Balance FROM account WHERE AID = ?";
+        double balance = 0.0;
         try {
             PreparedStatement ps = MySQL.con.prepareStatement(getBalance);
             ps.setInt(1, AID);
             ResultSet rs = ps.executeQuery();
-            while (rs.next()) {
-                return rs.getDouble("Balance");
+            if (rs.next()) {
+                balance = rs.getDouble("Balance");
             }
             rs.close();
             ps.close();
         } catch (SQLException exception) {
             exception.printStackTrace();
         }
-        return 0.0;
+        return balance;
     }
 
     public static void setBalance(int AID, double Balance) {

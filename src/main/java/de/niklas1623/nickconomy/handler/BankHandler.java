@@ -19,15 +19,13 @@ public class BankHandler {
         } catch (SQLException exception) {
             exception.printStackTrace();
         }
-
     }
 
-    public static int getBID(String name, int owner) {
-        String getBID = "SELECT BID FROM bank WHERE Name = ? AND Owner = ?";
+    public static int getBID(String name) {
+        String getBID = "SELECT BID FROM bank WHERE Name = ?";
         try {
             PreparedStatement ps = MySQL.con.prepareStatement(getBID);
             ps.setString(1, name);
-            ps.setInt(2, owner);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 return rs.getInt("BID");

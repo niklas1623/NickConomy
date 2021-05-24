@@ -23,3 +23,5 @@ Settings:
       AccountName: tax-holder
       AccountUUID: ef0a45ad-4d2a-4ba9-aaf6-c2a94bb6bd8b
       Tax-Amount: 5.0
+  DefaultBank:
+      Name: "CultBank"
