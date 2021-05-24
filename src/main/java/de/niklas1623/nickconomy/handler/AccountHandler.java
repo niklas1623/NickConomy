@@ -26,6 +26,18 @@ public class AccountHandler {
         return 0;
     }
 
+    public static void createAccountType(String type) {
+        String cAT = "INSERT INTO accounttyp (Typ) VALUES (?)";
+        try {
+            PreparedStatement ps = MySQL.con.prepareStatement(cAT);
+            ps.setString(1, type);
+            ps.executeUpdate();
+            ps.close();
+        } catch (SQLException exception) {
+            exception.printStackTrace();
+        }
+    }
+
     public static ResultSet executeStmtWithGeneratedKeys(PreparedStatement query) {
         try {
             query.executeUpdate();
