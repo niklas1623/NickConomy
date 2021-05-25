@@ -9,9 +9,9 @@ import java.sql.SQLException;
 public class BankHandler {
 
     public static void createBank(String name, int owner_PID) {
-        String createBank = "INSERT INTO player (Name, Owner) VALUES (?,?)";
+        String cB = "INSERT INTO bank (Name, Owner) VALUES (?,?)";
         try {
-            PreparedStatement ps = MySQL.con.prepareStatement(createBank);
+            PreparedStatement ps = MySQL.con.prepareStatement(cB);
             ps.setString(1, name);
             ps.setInt(2, owner_PID);
             ps.executeUpdate();
@@ -21,21 +21,55 @@ public class BankHandler {
         }
     }
 
+    public static void playerAccountBankRealisation(int pID, int bID, int aID) {
+        String pABR = "INSERT INTO player_x_bank (PID, BID, AID) VALUES (?,?,?)";
+        try {
+            PreparedStatement ps = MySQL.con.prepareStatement(pABR);
+            ps.setInt(1, pID);
+            ps.setInt(2, bID);
+            ps.setInt(3, aID);
+            ps.executeUpdate();
+            ps.close();
+        } catch (SQLException exception) {
+            exception.printStackTrace();
+        }
+    }
+
+    public static int getAID(int pID, int bID) {
+        String getAID = "SELECT AID FROM bank WHERE PID = ? AND BID = ?";
+        int aID = 0;
+        try {
+            PreparedStatement ps = MySQL.con.prepareStatement(getAID);
+            ps.setInt(1, pID);
+            ps.setInt(2, bID);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                aID = rs.getInt("AID");
+            }
+            ps.close();
+            rs.close();
+        } catch (SQLException exception) {
+            exception.printStackTrace();
+        }
+        return aID;
+    }
+
     public static int getBID(String name) {
         String getBID = "SELECT BID FROM bank WHERE Name = ?";
+        int bID = 0;
         try {
             PreparedStatement ps = MySQL.con.prepareStatement(getBID);
             ps.setString(1, name);
             ResultSet rs = ps.executeQuery();
-            while (rs.next()) {
-                return rs.getInt("BID");
+            if (rs.next()) {
+                bID = rs.getInt("BID");
             }
             rs.close();
             ps.close();
         } catch (SQLException exception) {
             exception.printStackTrace();
         }
-        return 0;
+        return bID;
     }
 
     public static String getName(int BID) {

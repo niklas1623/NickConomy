@@ -1,9 +1,8 @@
 package de.niklas1623.nickconomy.handler;
 
+import de.niklas1623.nickconomy.NickConomy;
 import de.niklas1623.nickconomy.utils.ConfigManager;
 import org.bukkit.Bukkit;
-
-import java.util.logging.Level;
 
 public class DefaultHandler {
 
@@ -12,13 +11,19 @@ public class DefaultHandler {
 
 
     public static void createDefaults() {
-       //if ()
-        PlayerHandler.createPlayer(taxAccount_Name, taxAccount_UUID);
-        BankHandler.createBank(ConfigManager.cfg.getString("Settings.DefaultBank.Name"), 0);
-        AccountHandler.createAccountType("Default");
-        AccountHandler.createAccount(0, 0);
-        Bukkit.getLogger().log(Level.INFO, "Tax-Account wurde erstellt mit dem Namen: "+taxAccount_Name+ " und der UUID: "+taxAccount_UUID);
-
+        String bankName = ConfigManager.cfg.getString("Settings.DefaultBank.Name");
+        if (BankHandler.getBID(bankName) <= 0) {
+            BankHandler.createBank(bankName, 0);
+        }
+        if (AccountHandler.getAccountTypeID("Default") <= 0) {
+            AccountHandler.createAccountType("Default");
+        }
+        if (PlayerHandler.getPlayerID(taxAccount_UUID) <= 0) {
+            PlayerHandler.createPlayer(taxAccount_Name, taxAccount_UUID);
+            int aID = AccountHandler.createAccount(0, 0);
+            BankHandler.playerAccountBankRealisation(PlayerHandler.getPlayerID(taxAccount_UUID), BankHandler.getBID(bankName), aID);
+            Bukkit.getConsoleSender().sendMessage(NickConomy.prefix+" Tax-Account wurde erstellt mit dem Namen: "+taxAccount_Name+ " und der UUID: "+taxAccount_UUID);
+        }
     }
 
 }

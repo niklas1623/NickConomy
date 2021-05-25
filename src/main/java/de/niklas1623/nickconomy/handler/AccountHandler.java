@@ -11,7 +11,7 @@ public class AccountHandler {
     public static int createAccount(int AtID, double Balance) {
         String createAccount = "INSERT INTO account (AtID, Balance) VALUES (?,?)";
         try {
-            PreparedStatement ps = MySQL.con.prepareStatement(createAccount);
+            PreparedStatement ps = MySQL.con.prepareStatement(createAccount, PreparedStatement.RETURN_GENERATED_KEYS);
             ps.setInt(1, AtID);
             ps.setDouble(2, Balance);
             ResultSet key = executeStmtWithGeneratedKeys(ps);
@@ -36,6 +36,22 @@ public class AccountHandler {
         } catch (SQLException exception) {
             exception.printStackTrace();
         }
+    }
+
+    public static int getAccountTypeID(String type) {
+        String gAtID = "SELECT AtID FROM accounttyp WHERE Typ = ?";
+        int aID = 0;
+        try {
+            PreparedStatement ps = MySQL.con.prepareStatement(gAtID);
+            ps.setString(1, type);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                aID = rs.getInt("AtID");
+            }
+        } catch (SQLException exception) {
+            exception.printStackTrace();
+        }
+        return aID;
     }
 
     public static ResultSet executeStmtWithGeneratedKeys(PreparedStatement query) {

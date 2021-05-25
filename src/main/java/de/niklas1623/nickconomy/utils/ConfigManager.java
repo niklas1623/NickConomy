@@ -23,7 +23,7 @@ public class ConfigManager {
 
 
     public static File getConfigFile() {
-        return new File("plugins/Servershop", "config.yml");
+        return new File("plugins/NickConomy", "config.yml");
     }
 
     public static void createMessagesConfig(){
