@@ -19,10 +19,13 @@ Database:
 
 
 Settings:
+    #Shows the System Messages in the Console, only for Debug!
+    DebugMode: true
     Tax-Account:
         AccountName: tax-holder
         AccountUUID: ef0a45ad-4d2a-4ba9-aaf6-c2a94bb6bd8b
         Tax-Amount: 5.0
     DefaultBank:
         Name: "CultBank"
+    #The Money that a new Account should get
     InitialBalance: 100.00

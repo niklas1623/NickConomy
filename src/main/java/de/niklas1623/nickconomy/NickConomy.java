@@ -1,5 +1,6 @@
 package de.niklas1623.nickconomy;
 
+import de.niklas1623.nickconomy.commands.MoneyCommand;
 import de.niklas1623.nickconomy.database.MySQL;
 import de.niklas1623.nickconomy.handler.DefaultHandler;
 import de.niklas1623.nickconomy.listeners.JoinListener;
@@ -32,6 +33,11 @@ public final class NickConomy extends JavaPlugin {
     public void onDisable() {
         MySQL.close();
         Bukkit.getConsoleSender().sendMessage(prefix+ " §cPlugin wurde gestoppt!");
+    }
+
+    private void registerCommands() {
+        MoneyCommand moneyCommand = new MoneyCommand(this);
+        getCommand("nickconomy").setExecutor(moneyCommand);
     }
 
     public void registerEvents() {

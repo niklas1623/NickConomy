@@ -1,5 +1,6 @@
 package de.niklas1623.nickconomy.handler;
 
+import de.niklas1623.nickconomy.api.NickConomyAPI;
 import de.niklas1623.nickconomy.database.MySQL;
 
 import java.sql.PreparedStatement;
@@ -74,36 +75,38 @@ public class BankHandler {
 
     public static String getName(int BID) {
         String getName = "SELECT Name FROM bank WHERE BID = ?";
+        String name = null;
         try {
             PreparedStatement ps = MySQL.con.prepareStatement(getName);
             ps.setInt(1, BID);
             ResultSet rs = ps.executeQuery();
-            while (rs.next()) {
-                return rs.getString("Name");
+            if (rs.next()) {
+                name = rs.getString("Name");
             }
             rs.close();
             ps.close();
         } catch (SQLException exception) {
             exception.printStackTrace();
         }
-        return null;
+        return name;
     }
 
     public static String getOwner(int BID) {
         String getOwner = "SELECT Owner FROM bank WHERE BID = ?";
+        String owner = null;
         try {
             PreparedStatement ps = MySQL.con.prepareStatement(getOwner);
             ps.setInt(1, BID);
             ResultSet rs = ps.executeQuery();
-            while (rs.next()) {
-                return rs.getString("Owner");
+            if (rs.next()) {
+                owner = rs.getString("Owner");
             }
             rs.close();
             ps.close();
         } catch (SQLException exception) {
             exception.printStackTrace();
         }
-        return null;
+        return owner;
     }
 
     public static void changeBankName(String new_name, String name, int BID) {

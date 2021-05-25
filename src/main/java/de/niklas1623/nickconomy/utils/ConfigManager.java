@@ -73,4 +73,8 @@ public class ConfigManager {
         return ChatColor.translateAlternateColorCodes('&', Objects.requireNonNull(Objects.requireNonNull(msgConfig.getString(path)).replaceAll("%prefix%", NickConomy.prefix)));
     }
 
+    public static boolean getDebugMode() {
+        return cfg.getBoolean("Settings.DebugMode");
+    }
+
 }

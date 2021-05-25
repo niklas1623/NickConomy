@@ -5,3 +5,10 @@ api-version: 1.16
 authors: [ niklas1623 ]
 description: New iConomy-System
 website: https://cultcraft.de/
+
+commands:
+  nickconomy:
+    description: Basic NickConomy Command!
+    usage: /nickconomy
+    aliases: [nc]
+    permission: nickconomy.command.money

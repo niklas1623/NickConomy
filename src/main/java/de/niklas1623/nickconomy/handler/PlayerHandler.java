@@ -5,16 +5,17 @@ import de.niklas1623.nickconomy.database.MySQL;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.UUID;
 
 public class PlayerHandler {
 
 
-    public static void createPlayer(String name, String uuid) {
+    public static void createPlayer(String name, UUID uuid) {
         String cp = "INSERT INTO player (Name, UUID) VALUES (?,?)";
         try {
             PreparedStatement ps = MySQL.con.prepareStatement(cp);
             ps.setString(1, name);
-            ps.setString(2, uuid);
+            ps.setString(2, uuid.toString());
             ps.executeUpdate();
             ps.close();
         } catch (SQLException e) {
@@ -22,12 +23,12 @@ public class PlayerHandler {
         }
     }
 
-    public static int getPlayerID(String uuid) {
+    public static int getPlayerID(UUID uuid) {
         String getPID = "SELECT PID FROM player WHERE UUID = ?";
         int pID = 0;
         try {
             PreparedStatement ps = MySQL.con.prepareStatement(getPID);
-            ps.setString(1, uuid);
+            ps.setString(1, uuid.toString());
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
                 pID = rs.getInt("PID");
@@ -40,12 +41,12 @@ public class PlayerHandler {
         return pID;
     }
 
-    public static void updatePlayerName(String name, String uuid) {
+    public static void updatePlayerName(String name, UUID uuid) {
         String updateName = "UPDATE player SET Name = ? WHERE UUID = ?";
         try {
             PreparedStatement ps = MySQL.con.prepareStatement(updateName);
             ps.setString(1, name);
-            ps.setString(2, uuid);
+            ps.setString(2, uuid.toString());
             ps.executeUpdate();
             ps.close();
         } catch (SQLException e) {
