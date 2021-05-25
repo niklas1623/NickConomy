@@ -21,7 +21,7 @@ public class JoinListener implements Listener {
         if (PlayerHandler.getPlayerID(uuid) <= 0 ) {
             PlayerHandler.createPlayer(name, uuid);
             Bukkit.getConsoleSender().sendMessage(NickConomy.prefix + " Created Player: "+ name + " with the UUID: " + uuid);
-            int aID = AccountHandler.createAccount(0, ConfigManager.cfg.getDouble("Settings.InitialBalance"));
+            int aID = AccountHandler.createAccount(AccountHandler.getAccountTypeID("Default"), ConfigManager.cfg.getDouble("Settings.InitialBalance"));
             BankHandler.playerAccountBankRealisation(PlayerHandler.getPlayerID(uuid), BankHandler.getBID(ConfigManager.cfg.getString("Settings.DefaultBank.Name")), aID);
         } else {
             PlayerHandler.updatePlayerName(name, uuid);
