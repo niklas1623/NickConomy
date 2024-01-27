@@ -41,6 +41,24 @@ public class PlayerHandler {
         return pID;
     }
 
+    public static int getPlayerID(String name) {
+        String getPID = "SELECT PID FROM player WHERE Name = ?";
+        int pID = 0;
+        try {
+            PreparedStatement ps = MySQL.con.prepareStatement(getPID);
+            ps.setString(1, name);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                pID = rs.getInt("PID");
+            }
+            rs.close();
+            ps.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return pID;
+    }
+
     public static void updatePlayerName(String name, UUID uuid) {
         String updateName = "UPDATE player SET Name = ? WHERE UUID = ?";
         try {
@@ -70,11 +88,6 @@ public class PlayerHandler {
             exception.printStackTrace();
         }
         return name;
-    }
-
-
-    public static void createDefaultAccount() {
-
     }
 
 

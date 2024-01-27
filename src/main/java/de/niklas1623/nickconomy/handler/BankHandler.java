@@ -37,7 +37,7 @@ public class BankHandler {
     }
 
     public static int getAID(int pID, int bID) {
-        String getAID = "SELECT AID FROM bank WHERE PID = ? AND BID = ?";
+        String getAID = "SELECT AID FROM player_x_bank WHERE PID = ? AND BID = ?";
         int aID = 0;
         try {
             PreparedStatement ps = MySQL.con.prepareStatement(getAID);

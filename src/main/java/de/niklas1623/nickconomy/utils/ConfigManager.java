@@ -54,7 +54,7 @@ public class ConfigManager {
     }
 
     public static void reloadMessages(){
-        msgConfig = YamlConfiguration.loadConfiguration(customConfigFile);
+        msgConfig = getMessageFileConfiguration();
     }
 
     public static void readConfig() {

@@ -1,6 +1,7 @@
 package de.niklas1623.nickconomy.handler;
 
 import de.niklas1623.nickconomy.NickConomy;
+import de.niklas1623.nickconomy.database.MySQL;
 import de.niklas1623.nickconomy.utils.ConfigManager;
 import org.bukkit.Bukkit;
 
@@ -14,21 +15,23 @@ public class DefaultHandler {
 
 
     public static void createDefaults() {
-        String bankName = ConfigManager.cfg.getString("Settings.DefaultBank.Name");
-        if (BankHandler.getBID(bankName) <= 0) {
-            BankHandler.createBank(bankName, 0);
-        }
-        if (AccountHandler.getAccountTypeID("Default") <= 0) {
-            AccountHandler.createAccountType("Default");
-        }
-        if (PlayerHandler.getPlayerID(taxAccount_UUID) <= 0) {
-            PlayerHandler.createPlayer(taxAccount_Name, taxAccount_UUID);
-            int aID = AccountHandler.createAccount(AccountHandler.getAccountTypeID("Default"), 0);
-            BankHandler.playerAccountBankRealisation(PlayerHandler.getPlayerID(taxAccount_UUID), BankHandler.getBID(bankName), aID);
-            if (ConfigManager.getDebugMode()) {
-                Bukkit.getConsoleSender().sendMessage(NickConomy.prefix + " Tax-Account wurde erstellt mit dem Namen: " + taxAccount_Name + " und der UUID: " + taxAccount_UUID);
+        if (MySQL.isConnected()) {
+            String bankName = ConfigManager.cfg.getString("Settings.DefaultBank.Name");
+            if (BankHandler.getBID(bankName) <= 0) {
+                BankHandler.createBank(bankName, 0);
             }
-        }
+            if (AccountHandler.getAccountTypeID("Default") <= 0) {
+                AccountHandler.createAccountType("Default");
+            }
+            if (PlayerHandler.getPlayerID(taxAccount_UUID) <= 0) {
+                PlayerHandler.createPlayer(taxAccount_Name, taxAccount_UUID);
+                int aID = AccountHandler.createAccount(AccountHandler.getAccountTypeID("Default"), 0);
+                BankHandler.playerAccountBankRealisation(PlayerHandler.getPlayerID(taxAccount_UUID), BankHandler.getBID(bankName), aID);
+                if (ConfigManager.getDebugMode()) {
+                    Bukkit.getConsoleSender().sendMessage(NickConomy.prefix + " Tax-Account wurde erstellt mit dem Namen: " + taxAccount_Name + " und der UUID: " + taxAccount_UUID);
+                }
+            }
+        } else Bukkit.getConsoleSender().sendMessage(NickConomy.prefix + " No MySQL Connection!");
     }
 
 }

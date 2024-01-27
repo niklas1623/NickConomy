@@ -9,6 +9,10 @@ website: https://cultcraft.de/
 commands:
   nickconomy:
     description: Basic NickConomy Command!
-    usage: /nickconomy
     aliases: [nc]
-    permission: nickconomy.command.money
+  nickmoney:
+    description: Gets the Balance of a Player
+    aliases:
+      - nm
+  money:
+    description: Is the main Command!
